@@ -657,4 +657,33 @@ const products = [
       "mens"
     ]
   }
+  , {
+    id: "bc2847e9-5323-403f-b7cf-57fde044a455",
+    image: "images/products/backpack.jpg",
+    name: "black school Backpack",
+    rating: {
+      stars: 3.5,
+      count: 245
+    },
+    priceCents: 1400,
+    keywords: [
+      "bags",
+      "apparel",
+      "mens"
+    ]
+  }, {
+    id: "bc2847e9-5323-403f-b7cf-57fde043s455",
+    image: "images/products/umbrella.jpg",
+    name: "green-protective-umbrella",
+    rating: {
+      stars: 4.5,
+      count: 450
+    },
+    priceCents: 840,
+    keywords: [
+      "fashion",
+      "travel",
+      "waterproof"
+    ]
+  }
 ];

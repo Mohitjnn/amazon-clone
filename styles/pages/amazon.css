@@ -144,6 +144,11 @@
   opacity: 0;
 }
 
+.hidden-added {
+  /* upon being called from javascript this will change opacity of the above class to 1 */
+  opacity: 1;
+}
+
 .added-to-cart img {
   height: 20px;
   margin-right: 5px;
