@@ -110,10 +110,10 @@ export function renderOrderSummary() {
             const { productId } = link.dataset;
             removeFromCart(productId);
 
-            renderCheckOutHeader();
+            renderCheckOutHeader();//mvc
             renderOrderSummary(); //mvc
 
-            renderPaymentSummary();
+            renderPaymentSummary();//mvc
         })
     });
 
@@ -124,11 +124,9 @@ export function renderOrderSummary() {
 
             updateCartQuantity(productId, newQuantityInput)
 
-            console.log(newQuantityInput);
-
-            document.querySelector(`.js-quantity-label-${productId}`).innerHTML = `${newQuantityInput}`;
-
             container.classList.remove('is-editing-quantity');
+
+            renderOrderSummary();//mvc
         }
 
         else {
