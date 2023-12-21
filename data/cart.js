@@ -53,10 +53,6 @@ export function removeFromCart(productId) {
     saveToStorage();
 }
 
-export function updateCartItem() {
-    document.querySelector(".js-return-to-home-link").innerHTML = `${cart.length} items`;
-}
-
 export function updateCartQuantity(productId, newQuantity) {
     let matchingItem;
     cart.forEach((cartItem) => {
