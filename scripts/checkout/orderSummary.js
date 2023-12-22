@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateCartQuantity, updateDeliveryOption } from "../../data/cart.js";
+import { cart, removeFromCart, updateCartQuantity, updateDeliveryOption, updateCartDate } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from "../../data/deliveryOption.js";
@@ -17,6 +17,7 @@ export function renderOrderSummary() {
 
         const dateString = calculateDeliveryDate(deliveryOption);
 
+        updateCartDate(productId, dateString);
 
         cartSummaryHTML += `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -138,13 +139,7 @@ export function renderOrderSummary() {
         let html = ``;
         deliveryOptions.forEach((deliveryOption) => {
 
-            // const today = dayjs();
-
-            // const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-
-            // const dateString = deliveryDate.format('dddd, MMMM D');
-
-            const dateString = getDeliveryOption(deliveryOption);
+            const dateString = calculateDeliveryDate(deliveryOption);
 
             const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)} - `;
 
