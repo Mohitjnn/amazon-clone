@@ -1,10 +1,11 @@
 import { order as Orders } from "../data/orderItems.js"
 import { getProduct } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js"
+import { updateCartValue } from "../data/cart.js";
 
 let Ordercontainer = ``;
 let gridContainer = document.querySelector('.orders-grid');
-
+document.querySelector('.cart-quantity').innerHTML = updateCartValue();
 Orders.forEach((Order) => {
     let products = Order.cart;
     let orderItems = ``;
@@ -29,7 +30,7 @@ Orders.forEach((Order) => {
             </div>
         
     `
-    
+
     products.forEach((product) => {
         const productId = product.productId;
         const matchingProduct = getProduct(productId);
@@ -69,7 +70,7 @@ Orders.forEach((Order) => {
     `;
 
     });
-      
+
     Ordercontainer += ` 
      <div class="order-container">
         <div class="order-header">${orderHeader}</div>

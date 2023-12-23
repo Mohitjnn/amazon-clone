@@ -93,3 +93,13 @@ export function updateCartDate(productId, Date) {
     matchingItem.deliveryDate = Date;
     saveToStorage();
 }
+
+export function updateCartValue() {
+    let cartQuantity = 0;
+  
+    cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+    return cartQuantity;
+  
+  }

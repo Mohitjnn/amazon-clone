@@ -1,9 +1,11 @@
-import { cart } from "../../data/cart.js";
+import { cart, saveToStorage, updateCartDate } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOption.js";
 import { formatCurrency } from "../utils/money.js"
 import { addToOrders } from "../../data/orderItems.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"
+import { renderOrderSummary } from "./orderSummary.js";
+import { renderCheckOutHeader } from "./checkoutHeader.js";
 export function renderPaymentSummary() {
     let productPriceCents = 0;
     let shippingPriceCents = 0;
@@ -65,7 +67,12 @@ export function renderPaymentSummary() {
         let orderPlaced = dayjs();
         const orderPlacedToday = orderPlaced.format('MMMM DD')
         addToOrders(TotalCents, orderPlacedToday, cart);
-
+        cart.length = 0;
+        renderCheckOutHeader();
+        renderOrderSummary();
+        renderPaymentSummary();
+        saveToStorage();
+        window.location.href = 'orders.html';
     })
 }
 
