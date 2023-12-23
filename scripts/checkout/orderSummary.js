@@ -66,7 +66,9 @@ export function renderOrderSummary() {
 
     document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
-
+    if (cart.length === 0) {
+        showEmptyCart();
+    }
 
     renderCheckOutHeader();
     document.querySelectorAll('.js-update-link').forEach((link) => {
@@ -133,6 +135,17 @@ export function renderOrderSummary() {
         else {
             alert('please enter value between 1-1000');
         }
+    }
+
+    function showEmptyCart() {
+        const emptyCart = document.querySelector('.js-order-summary');
+        emptyCart.innerHTML = `
+                <div data-testid="empty-cart-message">Your cart is empty.</div>
+                <a class=" button-primary view-products-link" href="amazon.html" data-testid="view-products-link">View products</a>
+                
+                `
+
+
     }
 
     function deliveryOptionsHTML(matchingProduct, cartItem) {

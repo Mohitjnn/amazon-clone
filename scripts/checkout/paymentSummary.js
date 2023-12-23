@@ -56,12 +56,17 @@ export function renderPaymentSummary() {
     <div class="payment-summary-money">$${formatCurrency(TotalCents)}</div>
     </div>
     
-    <button class="place-order-button button-primary js-place-order-button">
+    <button class="place-order-button button-primary js-place-order-button" id="placeOrder">
     Place your order
     </button>
     
     `;
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHtml;
+
+    if (cart.length === 0) {
+        var myButton = document.getElementById('placeOrder');
+        myButton.disabled = true;
+    }
 
     document.querySelector('.js-place-order-button').addEventListener('click', () => {
         let orderPlaced = dayjs();
