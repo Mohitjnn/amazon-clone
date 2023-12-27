@@ -70,7 +70,7 @@ export function renderPaymentSummary() {
 
     document.querySelector('.js-place-order-button').addEventListener('click', () => {
         let orderPlaced = dayjs();
-        const orderPlacedToday = orderPlaced.format('MMMM DD')
+        const orderPlacedToday = orderPlaced.format('dddd, DD MMMM  YYYY')
         addToOrders(TotalCents, orderPlacedToday, cart);
         cart.length = 0;
         renderCheckOutHeader();
