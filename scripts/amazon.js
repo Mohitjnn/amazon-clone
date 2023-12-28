@@ -2,10 +2,12 @@ import { cart, addToCart, updateCartValue } from "../data/cart.js";
 import { products } from "../data/products.js"
 import { formatCurrency } from "./utils/money.js";
 
+
+
 let productshtml = ''
 products.forEach((product) => {
   productshtml += ` 
-      <div class="product-container">
+      <div class="product-container" data-product-id = "${product.id}">
       <div class="product-image-container">
         <img class="product-image"
           src="${product.image}">
@@ -92,3 +94,31 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     document.querySelector('.cart-quantity').innerHTML = updateCartValue();
   })
 });
+
+let list = [];
+
+const inputValue = document.querySelector('[data-search-bar]');
+
+inputValue.addEventListener('input', (e) => {
+
+  const value = e.target.value.toLowerCase();
+  list.forEach((listItem) => {
+    const prodTemplate = document.querySelector(`[data-product-id = "${listItem.Id}"]`);
+    const isVisible = listItem.name.toLowerCase().includes(value) || listItem.keywords.some((keyword) => {
+      return keyword.toLowerCase().includes(value);
+    })
+    prodTemplate.classList.toggle("hide", !isVisible);
+  })
+
+})
+
+fetch("../backend/products.json").then(Response =>
+  Response.json()
+).then(data => {
+  list = data.map(listItem => {
+    console.log(listItem);
+    return { name: listItem.name, keywords: listItem.keywords, Id: listItem.id }
+
+  })
+  console.log(list);
+})

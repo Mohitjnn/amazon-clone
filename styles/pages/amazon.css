@@ -159,3 +159,7 @@
   padding: 8px;
   border-radius: 50px;
 }
+
+.hide {
+  display: none;
+}
