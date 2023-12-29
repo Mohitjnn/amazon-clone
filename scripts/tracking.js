@@ -67,7 +67,17 @@ function renderPacking() {
     function progressBar(OrderPlaced, dDate) {
         const today = dayjs();
         const tDate = today.format('dddd, DD MMMM YYYY');
-        console.log(tDate);
+
+        const orderPlacedDate = dayjs(OrderPlaced, { format: 'dddd, DD MMMM YYYY' });
+        const deliveryDate = dayjs(dDate, { format: 'dddd, DD MMMM YYYY' });
+
+        const totalDuration = deliveryDate.diff(orderPlacedDate);
+        const elapsedDuration = today.diff(orderPlacedDate);
+        const progressPercentage = (elapsedDuration / totalDuration) * 100;
+        console.log(progressPercentage);
+
+
+
 
         const pRate = {
             preparing: document.getElementById('Preparing'),
@@ -77,20 +87,17 @@ function renderPacking() {
 
         let progress = document.querySelector('.progress-bar')
 
-        const orderPlacedDate = dayjs(OrderPlaced, { format: 'dddd, DD MMMM YYYY' });
-        const deliveryDate = dayjs(dDate, { format: 'dddd, DD MMMM YYYY' });
+        progress.style.width = `${progressPercentage}%`;
 
-        if (today.isAfter(deliveryDate)) {
+
+        if (progressPercentage >= 100) {
             pRate.delivered.classList.add('current-status')
-            progress.style.width = "100%"
 
-        } else if (today.isBefore(deliveryDate) && !today.isSame(orderPlacedDate, 'day')) {
+        } else if (progressPercentage >= 50) {
             pRate.shipped.classList.add('current-status');
-            progress.style.width = "50%"
 
-        } else if (today.isSame(orderPlacedDate, 'day')) {
+        } else {
             pRate.preparing.classList.add('current-status')
-            progress.style.width = "10%"
 
         }
 

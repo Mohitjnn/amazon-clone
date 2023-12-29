@@ -1,8 +1,9 @@
-import { order as Orders, returnProductQuantity } from "../data/orderItems.js"
+import { order as Orders, returnProductQuantity, returnOrderProduct } from "../data/orderItems.js"
 import { getProduct } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js"
 import { updateCartValue } from "../data/cart.js";
 import { addToCart } from "../data/cart.js";
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"
 
 
 function renderOrder() {
@@ -43,7 +44,7 @@ function renderOrder() {
             const quantity = product.quantity;
 
             orderItems += `
-        
+
         <div class="product-image-container">
         <img src="${matchingProduct.image}">
             </div>
@@ -52,8 +53,8 @@ function renderOrder() {
                 <div class="product-name">
                     ${matchingProduct.name}
                 </div>
-                <div class="product-delivery-date">
-                Arriving on: ${deliveryDate}
+                <div class="product-delivery-date" data-product-id = "${matchingProduct.id}" data-order-id = "${Order.OrderId}">
+                Arriving on : ${deliveryDate}
                 </div>
                 <div class="product-quantity">
                     Quantity: ${quantity}
@@ -75,6 +76,7 @@ function renderOrder() {
                 
                 `;
 
+
         });
 
         Ordercontainer += ` 
@@ -88,6 +90,21 @@ function renderOrder() {
 
     gridContainer.innerHTML = Ordercontainer;
 
+    document.querySelectorAll('.product-delivery-date').forEach((deliveryDate) => {
+        const { productId } = deliveryDate.dataset;
+        const { orderId } = deliveryDate.dataset;
+        const matchingProduct = returnOrderProduct(productId, orderId);
+        const tDate = dayjs();
+        const dDate = dayjs(matchingProduct.deliveryDate, { format: 'dddd, DD MMMM YYYY' })
+
+        if (tDate.isAfter(dDate)) {
+            deliveryDate.innerHTML = `Delivered on : ${matchingProduct.deliveryDate}`
+        }
+
+
+
+    })
+
     document.querySelectorAll('.js-buy-again-button').forEach((button) => {
         button.addEventListener("click", () => {
             const { productId } = button.dataset;
@@ -96,57 +113,10 @@ function renderOrder() {
             const matchingProduct = getProduct(productId);
             ;
 
-            // var buyAgain = button.querySelector('.js-buy-again-message');
-
-
-
-
-
             addToCart(productId, quantity, matchingProduct.name);
-
-
 
             renderOrder();
         })
-
-        // button.addEventListener('click', () => {
-
-        //     const buyAgainMessage = button.querySelector('.js-buy-again-message');
-        //     const buyAgainSuccess = button.querySelector('.buy-again-success');
-        //     const buyAgainImage = button.querySelector('.buy-again-icon');
-
-        //     console.log(buyAgainMessage);
-        //     console.log(buyAgainSuccess);
-        //     console.log(buyAgainImage);
-        //     buyAgainImage.classList.add("added-to-cart");
-        //     buyAgainMessage.classList.add("added-to-cart");
-        //     buyAgainSuccess.classList.add("added-to-cart");
-        //     setTimeout(() => {
-
-        //         buyAgainImage.classList.remove("added-to-cart");
-        //         buyAgainMessage.classList.remove("added-to-cart");
-        //         buyAgainSuccess.classList.remove("added-to-cart");
-
-        //         console.log(buyAgainMessage);
-        //         console.log(buyAgainSuccess);
-        //         console.log(buyAgainImage);
-        //         buyAgainImage.classList.add("added-to-cart");
-
-
-        //     }, 2000)
-
-
-        // // Show the success message
-        // buyAgainMessage.style.display = 'none';
-        // buyAgainSuccess.style.display = 'inline-block';
-
-        // // Set a timeout to hide the success message after 2 seconds
-        // setTimeout(() => {
-        //     buyAgainMessage.style.display = 'inline-block';
-        //     buyAgainSuccess.style.display = 'none';
-        // }, 2000);
-
-        //})
     })
 
 

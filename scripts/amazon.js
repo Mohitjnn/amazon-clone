@@ -116,9 +116,7 @@ fetch("../backend/products.json").then(Response =>
   Response.json()
 ).then(data => {
   list = data.map(listItem => {
-    console.log(listItem);
     return { name: listItem.name, keywords: listItem.keywords, Id: listItem.id }
 
   })
-  console.log(list);
 })
